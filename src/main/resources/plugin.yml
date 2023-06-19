@@ -6,3 +6,15 @@ depend: [FastAsyncWorldEdit]
 authors: [JamieIsGeek]
 description: A plugin to make water rise innit
 website: https://jamieisgeek.uk
+commands:
+  event:
+    description: Trigger the event
+    usage: /<command> <start|stop>
+    permission: waterrising.admin
+
+permissions:
+  waterrising.notify:
+    default: not op
+
+  waterrising.admin:
+    default: op

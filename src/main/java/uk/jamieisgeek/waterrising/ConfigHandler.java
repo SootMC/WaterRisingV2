@@ -1,12 +1,6 @@
 package uk.jamieisgeek.waterrising;
 
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.file.YamlConfiguration;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ConfigHandler {
     private final WaterRising plugin;
@@ -14,16 +8,24 @@ public class ConfigHandler {
 
     public ConfigHandler(WaterRising plugin) {
         this.plugin = plugin;
+        this.initialize();
     }
 
-    public boolean initialize() {
+    public void initialize() {
         plugin.saveDefaultConfig();
         this.config = plugin.getConfig();
 
-        return true;
     }
 
     public Object getFromConfig(String path) {
-        return config.get(path);
+        return this.config.get(path);
+    }
+
+    public Long getInterval() {
+        return this.config.getLong("interval");
+    }
+
+    public Integer getInt(String path) {
+        return this.config.getInt(path);
     }
 }

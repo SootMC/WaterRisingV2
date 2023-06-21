@@ -5,7 +5,7 @@ base-level: -56
 max-level: 256
 
 # The interval in ticks between each level rise
-interval: 200
+interval: 200.0
 
 corner1:
   x: -100

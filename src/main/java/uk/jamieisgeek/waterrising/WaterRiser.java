@@ -1,16 +1,11 @@
 package uk.jamieisgeek.waterrising;
 
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.WorldEdit;
-import com.sk89q.worldedit.function.pattern.Pattern;
-import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldedit.regions.CuboidRegion;
-import com.sk89q.worldedit.regions.Region;
-import com.sk89q.worldedit.world.block.BlockType;
-import com.sk89q.worldedit.world.block.BlockTypes;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.WorldBorder;
+import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 import uk.jamieisgeek.sootlib.Misc.TextManager;
 
 public class WaterRiser extends BukkitRunnable {
@@ -24,30 +19,25 @@ public class WaterRiser extends BukkitRunnable {
     @Override
     public void run() {
         currentLevel++;
-        if (currentLevel >= (int) configHandler.getFromConfig("max-level")) {
-            cancel();
+
+        World world = Bukkit.getWorld((String) configHandler.getFromConfig("world"));
+        WorldBorder border = world.getWorldBorder();
+        int size = (int) border.getSize();
+        int centerX = (int) border.getCenter().getX();
+        int centerZ = (int) border.getCenter().getZ();
+        int startX = centerX - size / 2;
+        int startZ = centerZ - size / 2;
+        int endX = centerX + size / 2;
+        int endZ = centerZ + size / 2;
+
+        for (int x = startX + 2; x < endX + 2; x++) {
+            for (int z = startZ + 2; z < endZ + 2; z++) {
+                Block block = world.getBlockAt(x, currentLevel, z);
+                if(block.getType() != Material.AIR) continue;
+                block.setType(Material.WATER, false);
+            }
         }
 
-        BlockVector3 side1 = getBlockVector3(new Vector((int) configHandler.getFromConfig("corner1.x"), currentLevel, (int) configHandler.getFromConfig("corner1.z")));
-        BlockVector3 side2 = getBlockVector3(new Vector((int) configHandler.getFromConfig("corner2.x"), currentLevel, (int) configHandler.getFromConfig("corner2.z")));
-        Region region = new CuboidRegion(side1, side2);
-
-        EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(region.getWorld(), -1);
-
-        BlockType blockType = BlockTypes.WATER;
-        Pattern pattern = blockType.getDefaultState();
-        editSession.setBlocks(region, pattern);
-
-        editSession.close();
-
         Bukkit.broadcast(new TextManager().translateHex("&#266c97&lThe water is at Y: " + currentLevel), "waterrising.notify");
-    }
-
-    private BlockVector3 getBlockVector3(Vector vector) {
-        return BlockVector3.at(vector.getX(), vector.getY(), vector.getZ());
-    }
-
-    public boolean isRunning() {
-        return this.isCancelled();
     }
 }

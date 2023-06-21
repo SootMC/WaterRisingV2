@@ -3,7 +3,6 @@ package uk.jamieisgeek.waterrising;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 public class Command implements CommandExecutor {
     private final WaterRiser waterRiser;
@@ -13,7 +12,7 @@ public class Command implements CommandExecutor {
         this.configHandler = configHandler;
     }
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
         if(!(sender instanceof Player player)) {
             sender.sendMessage("You must be a player to use this command!");
             return true;
@@ -30,20 +29,11 @@ public class Command implements CommandExecutor {
         }
 
         if(args[0].equalsIgnoreCase("start")) {
-            if(waterRiser.isRunning()) {
-                player.sendMessage("The water is already rising!");
-                return true;
-            }
-
-            waterRiser.runTaskTimer(WaterRising.getProvidingPlugin(WaterRising.class), 0, (long) configHandler.getFromConfig("interval"));
+            System.out.println(configHandler.getFromConfig("interval"));
+            waterRiser.runTaskTimer(WaterRising.getProvidingPlugin(WaterRising.class), 0, configHandler.getInterval());
             player.sendMessage("The water is now rising!");
             return true;
         } else if (args[0].equalsIgnoreCase("stop")) {
-            if(!waterRiser.isRunning()) {
-                player.sendMessage("The water is not rising!");
-                return true;
-            }
-
             waterRiser.cancel();
             player.sendMessage("The water is no longer rising!");
             return true;

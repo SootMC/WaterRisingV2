@@ -2,7 +2,9 @@ name: WaterRising
 version: '${version}'
 main: uk.jamieisgeek.waterrising.WaterRising
 api-version: 1.19
-depend: [FastAsyncWorldEdit]
+depend:
+  - FastAsyncWorldEdit
+  - WorldEdit
 authors: [JamieIsGeek]
 description: A plugin to make water rise innit
 website: https://jamieisgeek.uk

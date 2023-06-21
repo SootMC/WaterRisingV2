@@ -22,10 +22,7 @@ repositories {
 
 dependencies {
     compileOnly "org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT"
-    implementation 'com.github.JamieIsGeek:SootLib:1.1'
-    implementation(platform("com.intellectualsites.bom:bom-1.18.x:1.28"))
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core")
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit")
+    compileOnly 'com.github.JamieIsGeek:SootLib:1.1'
 }
 
 def targetJavaVersion = 17

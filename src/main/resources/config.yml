@@ -1,0 +1,16 @@
+# The level in which the water will start rising from
+base-level: -56
+
+# The level where the water will stop rising
+max-level: 256
+
+# The interval in ticks between each level rise
+interval: 200.0
+
+corner1:
+  x: -100
+  z: -100
+
+corner2:
+  x: 100
+  z: 100

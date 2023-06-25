@@ -34,7 +34,7 @@ public class WaterRiser extends BukkitRunnable {
             for (int z = startZ + 2; z < endZ + 2; z++) {
                 Block block = world.getBlockAt(x, currentLevel, z);
                 if(block.getType() != Material.AIR) continue;
-                block.setType(Material.WATER, false);
+                block.setType(Material.WATER, true);
             }
         }
 
